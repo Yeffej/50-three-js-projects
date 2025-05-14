@@ -1,0 +1,41 @@
+---
+const { project } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>50 ThreeJS Projects - {project}</title>
+	</head>
+	<body>
+		<div>
+			<slot />
+		</div>
+	</body>
+</html>
+
+<style is:global>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,body {
+        overflow: hidden;
+    }
+
+    body {
+        background-color: #02010a;
+    }
+
+    #webgl {
+        position: fixed;
+        top: 0;
+        left: 0;
+        outline: none;
+    }
+</style>

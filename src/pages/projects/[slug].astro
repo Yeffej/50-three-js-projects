@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/ProjectsLayout.astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+    const projects = await getCollection('projects');
+    return projects.map((p) => ({
+        params: { slug: p.id },
+        props: { ...p.data } 
+    }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const { name } = Astro.props
+
+---
+
+<Layout project={name}>
+    <div id="data" style="display: none;" data-slug={slug}></div>
+    <canvas id="webgl"></canvas>
+</Layout>
+
+<script>
+    const dataElement = document.getElementById('data');   
+    import(`../../scripts/${dataElement?.dataset.slug}.ts`).catch(err => {
+      console.error("Script load failed", err);
+    });
+</script>

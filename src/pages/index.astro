@@ -1,11 +1,246 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { BASE } from '../constants';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = await getCollection('projects');
+const SCROLL = 5000;
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Home">
+	<canvas id="webgl"></canvas>
+	<div style={{ height: `${SCROLL}px` }}></div>
+	<div class="container" id="wrapper" data-scrollmax={SCROLL} style="--blur: 12px;">
+		<main class="hero section">
+			<h1>
+				<span class="titleText">
+					The future of the web is 3D...
+				</span>
+				<span class="titleText">That's why I'm unveiling 50 projects that redefine what a website can be.</span>
+			</h1>
+		</main>
+		<section aria-label="Projects List" class="projects section">
+			<h1>
+				My ThreeJS <i><img src={`${BASE}/icons/three.svg`} alt="three.js logo"></i> Projects
+			</h1>
+			<ul class="list">
+				{projects.map((project) => (
+					<li>
+						<a href={`${BASE}/projects/${project.id}`}>{project.data.name}</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	</div>
+	<button class="scroll-btn">
+		<i><img src={`${BASE}/icons/arrow-down.gif`} alt="arrow down icon"></i>
+		<span>Scroll</span>
+	</button>
 </Layout>
+
+<style>
+	.container {
+		position: fixed;
+		top: 0;
+		left: 0;
+
+		width: 100%;
+		height: 100%;
+	}
+	
+	#webgl {
+		position: fixed;
+		left: 0;
+		top: 0;
+		outline: none;
+		/* filter: blur(var(--blur)); */
+		z-index: -10;
+	}
+	.hero {
+		width: 100%;
+		height: 100vh;
+		display: grid;
+		place-items: center;
+	}
+	.hero h1 {
+		width: 100%;
+		height: 100px;
+		font-size: 4em;
+		font-weight: 700;
+		font-style: italic;
+		overflow: clip;
+		position: relative;
+	}
+	.hero h1 span {
+		width: 100%;
+		display: inline-block;
+		position: absolute;
+		text-align: center;
+		transition: 1s 0.2s all;
+		opacity: 0;
+	}
+	.hero h1 span:nth-child(1) {
+		transform: translateY(-150px) rotate(-4deg);	
+	}
+	.hero h1 span:nth-child(2) {
+		transform: translateY(150px) rotate(4deg);	
+		font-size: 0.5em;
+	}
+	.hero h1 span.appear {
+		transform: translateY(0px) rotate(0deg);
+		opacity: 1;
+	}
+	.projects {
+		width: 100%;
+		height: 100vh;
+		display: grid;
+		place-content: center;
+		opacity: 0;
+	}
+	.projects h1 {
+		margin-bottom: 25px;
+		display: flex;
+		align-items: center;
+		font-size: 4em;
+		font-weight: 300;
+		text-align: center;
+		text-shadow: 1px 1px 5px var(--font-color);
+	}
+	.projects h1 i {
+		width: 70px;
+		height: 70px;
+		filter: invert(1) drop-shadow(1px 1px 5px var(--font-color));
+	}
+	.projects h1 i img {
+		width: 100%;
+		object-fit: cover;
+	}
+	.projects .list {
+		font-size: 1.2em;
+		font-weight: 600;
+		text-align: center;
+		list-style: none;
+	}
+	.projects .list li a {
+		display: inline-block;
+		color: inherit;
+		text-decoration: none;
+		transition: 500ms all;
+	}
+	.projects .list li a:hover {
+		color: var(--action-color);
+		text-decoration: underline;
+		scale: 1.1;
+	}
+	.scroll-btn {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		border: none;
+		background-color: transparent;
+		font-size: 1.2em;
+		color: var(--font-color);
+		cursor: pointer;
+
+		position: fixed;
+		bottom: 35px;
+		right: 35px;
+		opacity: 0;
+		scale: 0;
+		transition: 1s 0.2s opacity, 1s 0.2s scale;
+	}
+	.scroll-btn::before {
+		display: block;
+		content: ' ';
+		width: 100px;
+		height: 100px;
+		border: 1px solid var(--font-color);
+		border-radius: 50%;
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: 300ms width, 300ms height;
+	}
+	.scroll-btn:hover::before {
+		width: 110px;
+		height: 110px;
+	}
+	.scroll-btn i {
+		position: absolute;
+		top: 0;
+		opacity: 0;
+		filter: invert(1);
+		transition: 300ms;
+	}
+	.scroll-btn:hover i {
+		opacity: 1;
+		transform: translateY(30px);
+	}
+	.grow {
+		opacity: 1;
+		scale: 1;
+	}
+</style>
+
+<script>
+	const titles: HTMLElement[] = Array.from(document.querySelectorAll('.titleText'));
+	const sections: HTMLElement[] = Array.from(document.querySelectorAll('.section'));
+	const contentWrapper = document.getElementById('wrapper');
+	const scrollBtn = document.querySelector('.scroll-btn');
+	const TOTAL_SCROLL: number = Number(contentWrapper?.dataset.scrollmax);
+	const MAX_BLUR = 12;
+	const MAX_TRANSLATION = 100;
+	const MAX_OPACITY = 1;
+	const scrollSteps = [200, 250, 500, 1200];
+	
+	window.addEventListener('DOMContentLoaded', () => {
+		// make sure scroll is on initial position
+		window.scrollTo(0, 0);
+
+		titles[0]?.classList.add('appear');
+		scrollBtn?.classList.add('grow');
+		scrollBtn?.addEventListener('click', ()=> {
+			window.scrollTo({ top: 250, behavior: 'smooth' });
+		})
+	});
+	
+	window.addEventListener('scroll', (e) => {
+		const scroll = window.scrollY;
+		
+		const blur = getBlur(scroll);
+		contentWrapper?.style.setProperty('--blur', `${blur}px`);
+
+		if(scroll >= scrollSteps[1]) {
+			// change titles and hide scrollBtn
+			titles[0]?.classList.remove('appear');
+			titles[1]?.classList.add('appear');
+			scrollBtn?.classList.remove('grow');
+		} else if(titles[1]?.classList.contains('appear')) {
+			// change titles and show scrollBtn
+			titles[1]?.classList.remove('appear');
+			titles[0]?.classList.add('appear');
+			scrollBtn?.classList.add('grow');
+		}
+
+		sections[0].style.transform =  `translateY(${-1 * getTranslation(scroll)}%)`;
+		sections[0].style.opacity = `${MAX_OPACITY - getOpacity(scroll)}`;
+		sections[1].style.transform =  `translateY(${-1 * getTranslation(scroll)}%)`;
+		sections[1].style.opacity =  `${getOpacity(scroll)}`;
+	});
+
+	function getBlur(scroll: number): number {
+		return Math.floor( MAX_BLUR * (1 - Math.min(1, scroll/scrollSteps[0])) );
+	}
+	function getOpacity(scroll: number): number {
+		const scrolldx = Math.max(0, scroll-scrollSteps[2]);
+		return Math.min(MAX_OPACITY, MAX_OPACITY * scrolldx/scrollSteps[3]);
+	}
+	function getTranslation(scroll: number): number {
+		const scrolldx = Math.max(0, scroll-scrollSteps[2]);
+		return Math.floor(Math.min(MAX_TRANSLATION, MAX_TRANSLATION * scrolldx/scrollSteps[3]));
+	}
+</script>
+
+<script src="../scripts/homepage-background.ts"></script>
