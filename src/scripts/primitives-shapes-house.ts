@@ -31,15 +31,16 @@ const parameters = {
     sunColor: '#ffb703'
 }
 const skyController = {
-    turbidity: 3,
+    turbidity: 10,
     rayleigh: 3,
-    mieCoefficient: 0.008,
+    mieCoefficient: 0.005,
     mieDirectionalG: 0.7,
-    elevation: 0,
+    elevation: 2,
     azimuth: 160,
     // exposure: renderer.toneMappingExposure
 };
-const gui = new GUI();
+const gui = new GUI({ title: "House Settings", closeFolders: true });
+gui.close();
 
 /**
  * Scene & Camera
@@ -70,10 +71,20 @@ const sky = new Sky();
 sky.scale.setScalar( 1000 );
 scene.add( sky );
 
+const sun = new THREE.Mesh(
+    new  THREE.CircleGeometry(6, 16),
+    new THREE.MeshBasicMaterial({ color: parameters.sunColor })
+);
+sun.position.copy(sunLight.position);
+
+gui.addColor(parameters, 'sunColor').onChange(() => {
+    sun.material.color.set(parameters.sunColor);
+});
+
 const sunPosition = new THREE.Vector3();
 const uniforms = sky.material.uniforms;
 
-const guiChanged = () => {
+const skyChanged = () => {
     uniforms[ 'turbidity' ].value = skyController.turbidity;
     uniforms[ 'rayleigh' ].value = skyController.rayleigh;
     uniforms[ 'mieCoefficient' ].value = skyController.mieCoefficient;
@@ -86,18 +97,18 @@ const guiChanged = () => {
 
     // renderer.toneMappingExposure = skyController.exposure;
 }
-// apply initial sky settings.
-guiChanged();
+// apply initial settings
+skyChanged();
 
 const skyGui = gui.addFolder('Sky');
 
-skyGui.add( skyController, 'turbidity', 0.0, 20.0, 0.1 ).onChange( guiChanged );
-skyGui.add( skyController, 'rayleigh', 0.0, 4, 0.001 ).onChange( guiChanged );
-skyGui.add( skyController, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( guiChanged );
-skyGui.add( skyController, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( guiChanged );
-skyGui.add( skyController, 'elevation', 0, 10, 0.1 ).onChange( guiChanged );
-skyGui.add( skyController, 'azimuth', -180, 180, 0.1 ).onChange( guiChanged );
-// skyGui.add( skyController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
+skyGui.add( skyController, 'turbidity', 0.0, 20.0, 0.1 ).onChange( skyChanged );
+skyGui.add( skyController, 'rayleigh', 0.0, 4, 0.001 ).onChange( skyChanged );
+skyGui.add( skyController, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( skyChanged );
+skyGui.add( skyController, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( skyChanged );
+skyGui.add( skyController, 'elevation', 0, 10, 0.1 ).onChange( skyChanged );
+skyGui.add( skyController, 'azimuth', -180, 180, 0.1 ).onChange( skyChanged );
+// skyGui.add( skyController, 'exposure', 0, 1, 0.0001 ).onChange( skyChanged );
 
 
 /**
@@ -420,7 +431,7 @@ for (let i = 0; i < countZ * 2; i++) {
 
 annex.add(annexWalls, annexRoof);
 house.add(walls, base, roof, annex, door);
-scene.add(floor, house, fenceGroup);
+scene.add(floor, house, fenceGroup, sun);
 
 
 /**
@@ -436,6 +447,12 @@ renderer.setPixelRatio(sizes.pixelRatio);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
+controls.enablePan = false;
+// zoom
+controls.maxDistance = 50;
+controls.minDistance = 8;
+// rotation
+controls.maxPolarAngle = Math.PI * 0.45;
 
 /**
  * SHADOWS
@@ -474,6 +491,9 @@ fenceGroup.traverse((child) => {
 
 
 function loop() {
+    // make the sun always look in front
+    sun.lookAt(camera.position);
+
     controls.update();
     renderer.render(scene, camera);
 }
@@ -586,3 +606,5 @@ function createRoofGeometry(width = 4, height = 2, depth = 4, flat = true) {
 
   return geometry;
 }
+
+

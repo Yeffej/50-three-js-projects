@@ -1,0 +1,5 @@
+name: "Mouse particles"
+number: 7
+script: "mouse-particles-effect.ts"
+created: 2025-05-26
+updated: 2025-05-28

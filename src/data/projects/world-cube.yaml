@@ -1,0 +1,5 @@
+name: "World Cube - SkyBox"
+number: 7
+script: "world-cube.ts"
+created: 2025-05-27
+updated: 2025-05-27
