@@ -8,7 +8,7 @@ import { BASE } from "../constants";
  */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, sizes.aspectRatio, 0.1, 100);
-camera.position.z = 0.01;
+camera.position.z = 50;
 
 /**
  * MESHES
@@ -22,6 +22,13 @@ const texture_lf = textureLoader2.load('arid2_lf.jpg');
 const texture_rt = textureLoader2.load('arid2_rt.jpg');
 const texture_up = textureLoader2.load('arid2_up.jpg');
 const texture_dn = textureLoader2.load('arid2_dn.jpg');
+
+texture_ft.colorSpace = THREE.SRGBColorSpace;
+texture_bk.colorSpace = THREE.SRGBColorSpace;
+texture_lf.colorSpace = THREE.SRGBColorSpace;
+texture_rt.colorSpace = THREE.SRGBColorSpace;
+texture_up.colorSpace = THREE.SRGBColorSpace;
+texture_dn.colorSpace = THREE.SRGBColorSpace;
 
 const materials = [
     new THREE.MeshBasicMaterial({ map: texture_ft, side: THREE.BackSide }),

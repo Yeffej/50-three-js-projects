@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+import { BASE } from "../constants";
 
 /**
  * CONFIG
@@ -39,7 +40,7 @@ let lines: THREE.LineSegments | undefined;
 let totalSegments: number;
 
 const loader = new FontLoader();
-loader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
+loader.load(`${BASE}/fonts/helvetiker_regular.typeface.json`, (font) => {
   const textGeo = new TextGeometry("Hello Three.js", {
     font: font,
     size: 1,

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls, Sky } from 'three/examples/jsm/Addons.js';
 import { sizes, canvas } from './utils/utils';
 import GUI from 'lil-gui';
+import { BASE } from '../constants';
 
 /**
  * CONFIG
@@ -105,38 +106,40 @@ skyGui.add( skyController, 'azimuth', -180, 180, 0.1 ).onChange( guiChanged );
  */
 // load color/diffuse textures
 const textureLoader = new THREE.TextureLoader();
-const floorColorTexture = textureLoader.load('/textures/sparse_grass/sparse_grass_diff_1k.webp'); 
-const concreteColorTexture = textureLoader.load('/textures/concrete_floor_worn_001/concrete_floor_worn_001_diff_1k.webp'); 
-const houseWallsColorTexture = textureLoader.load('/textures/weathered_brown_planks/weathered_brown_planks_diff_1k.webp'); 
-const houseRoofColorTexture = textureLoader.load('/textures/ceramic_roof_01/ceramic_roof_01_diff_1k.webp'); 
-const hAnnexRoofColorTexture = textureLoader.load('/textures/roof_07/roof_07_diff_1k.webp');
-const houseDoorColorTexture =  textureLoader.load('/textures/door/color.webp');
+textureLoader.setPath(`${BASE}/textures`);
+
+const floorColorTexture = textureLoader.load('/sparse_grass/sparse_grass_diff_1k.webp'); 
+const concreteColorTexture = textureLoader.load('/concrete_floor_worn_001/concrete_floor_worn_001_diff_1k.webp'); 
+const houseWallsColorTexture = textureLoader.load('/weathered_brown_planks/weathered_brown_planks_diff_1k.webp'); 
+const houseRoofColorTexture = textureLoader.load('/ceramic_roof_01/ceramic_roof_01_diff_1k.webp'); 
+const hAnnexRoofColorTexture = textureLoader.load('/roof_07/roof_07_diff_1k.webp');
+const houseDoorColorTexture =  textureLoader.load('/door/color.webp');
 
 // load Ambient Occlusion, Roughness, metalness textures
-const floorARMTexture = textureLoader.load('/textures/sparse_grass/sparse_grass_arm_1k.webp'); 
-const concreteARMTexture = textureLoader.load('/textures/concrete_floor_worn_001/concrete_floor_worn_001_arm_1k.webp'); 
-const houseWallsARMTexture = textureLoader.load('/textures/weathered_brown_planks/weathered_brown_planks_arm_1k.webp'); 
-const houseRoofARMTexture = textureLoader.load('/textures/ceramic_roof_01/ceramic_roof_01_arm_1k.webp'); 
-const hAnnexRoofARMTexture = textureLoader.load('/textures/roof_07/roof_07_arm_1k.webp');
-const houseDoorAOTexture =  textureLoader.load('/textures/door/ambientOcclusion.webp'); 
-const houseDoorRoughnessTexture =  textureLoader.load('/textures/door/roughness.webp'); 
-const houseDoorMetalnessTexture =  textureLoader.load('/textures/door/metalness.webp');
+const floorARMTexture = textureLoader.load('/sparse_grass/sparse_grass_arm_1k.webp'); 
+const concreteARMTexture = textureLoader.load('/concrete_floor_worn_001/concrete_floor_worn_001_arm_1k.webp'); 
+const houseWallsARMTexture = textureLoader.load('/weathered_brown_planks/weathered_brown_planks_arm_1k.webp'); 
+const houseRoofARMTexture = textureLoader.load('/ceramic_roof_01/ceramic_roof_01_arm_1k.webp'); 
+const hAnnexRoofARMTexture = textureLoader.load('/roof_07/roof_07_arm_1k.webp');
+const houseDoorAOTexture =  textureLoader.load('/door/ambientOcclusion.webp'); 
+const houseDoorRoughnessTexture =  textureLoader.load('/door/roughness.webp'); 
+const houseDoorMetalnessTexture =  textureLoader.load('/door/metalness.webp');
 
 // load Normals Textures
-const floorNormalsTexture = textureLoader.load('/textures/sparse_grass/sparse_grass_nor_gl_1k.webp'); 
-const concreteNormalsTexture = textureLoader.load('/textures/concrete_floor_worn_001/concrete_floor_worn_001_nor_gl_1k.webp'); 
-const houseWallsNormalsTexture = textureLoader.load('/textures/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.webp'); 
-const houseRoofNormalsTexture = textureLoader.load('/textures/ceramic_roof_01/ceramic_roof_01_nor_gl_1k.webp'); 
-const hAnnexRoofNormalsTexture = textureLoader.load('/textures/roof_07/roof_07_nor_gl_1k.webp');
-const houseDoorNormalsTexture =  textureLoader.load('/textures/door/normal.webp');
+const floorNormalsTexture = textureLoader.load('/sparse_grass/sparse_grass_nor_gl_1k.webp'); 
+const concreteNormalsTexture = textureLoader.load('/concrete_floor_worn_001/concrete_floor_worn_001_nor_gl_1k.webp'); 
+const houseWallsNormalsTexture = textureLoader.load('/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.webp'); 
+const houseRoofNormalsTexture = textureLoader.load('/ceramic_roof_01/ceramic_roof_01_nor_gl_1k.webp'); 
+const hAnnexRoofNormalsTexture = textureLoader.load('/roof_07/roof_07_nor_gl_1k.webp');
+const houseDoorNormalsTexture =  textureLoader.load('/door/normal.webp');
 
 // load displacements Textures
-const floorDisplacementTexture = textureLoader.load('/textures/sparse_grass/sparse_grass_disp_1k.webp'); 
-const houseDoorDisplacementTexture =  textureLoader.load('/textures/door/height.webp');
+const floorDisplacementTexture = textureLoader.load('/sparse_grass/sparse_grass_disp_1k.webp'); 
+const houseDoorDisplacementTexture =  textureLoader.load('/door/height.webp');
 
 // load alpha textures
-const floorAlphaTexture = textureLoader.load('/textures/alpha/rounded.webp'); 
-const houseDoorAlphaTexture =  textureLoader.load('/textures/door/alpha.webp');
+const floorAlphaTexture = textureLoader.load('/alpha/rounded.webp'); 
+const houseDoorAlphaTexture =  textureLoader.load('/door/alpha.webp');
 
 // add color space
 floorColorTexture.colorSpace = THREE.SRGBColorSpace;

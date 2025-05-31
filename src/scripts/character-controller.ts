@@ -1,6 +1,7 @@
 import GUI from "lil-gui";
 import * as THREE from "three";
 import { GLTFLoader, OrbitControls, Timer } from "three/examples/jsm/Addons.js";
+import { BASE } from "../constants";
 
 /**
  * CONFIG
@@ -90,7 +91,7 @@ let currentAnimationIdx = animationsNameIdx.idle;
 let soldier: THREE.Object3D;
 
 const gltfLoader = new GLTFLoader();
-gltfLoader.load('/models/soldier/Soldier.glb', (gltf) => {
+gltfLoader.load(`${BASE}/models/soldier/Soldier.glb`, (gltf) => {
     soldier = new THREE.Group();
     const soldierMesh = gltf.scene.children[0];
     soldierMesh.position.set(0, 0, 0);

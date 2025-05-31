@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import { BASE } from "../constants";
 
 const size = { w: window.innerWidth, h: window.innerHeight };
 const canvas = document.getElementById("webgl");
@@ -11,7 +12,7 @@ camera.position.z = 5;
 
 const rgbeLoader = new RGBELoader();
 rgbeLoader.load(
-  "/textures/environmentMap/stierberg_sunrise_4k.hdr",
+  `${BASE}/textures/environmentMap/stierberg_sunrise_4k.hdr`,
   (envMap) => {
     envMap.mapping = THREE.EquirectangularReflectionMapping;
 
