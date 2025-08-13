@@ -1,5 +1,8 @@
+order: 2
 name: "Text Donuts Effect"
-number: 2
+slug: text-donuts-effect
+description: "Randomly generated donus, spheres and cubes around the text, 
+  with a great camera movement and mouse effect."
 script: "text-donuts-effect.ts"
 created: 2025-04-30
 updated: 2025-04-30

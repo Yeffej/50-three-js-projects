@@ -1,5 +1,8 @@
+order: 4
 name: "Character Controller"
-number: 4
+slug: character-controller
+description: "Simple character controller movements with synchronized animations, 
+  and trasnsition between animations."
 script: "character-controller.ts"
 created: 2025-05-07
 updated: 2025-05-12

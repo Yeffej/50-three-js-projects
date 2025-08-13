@@ -1,0 +1,45 @@
+<ul aria-label="Cards List" class="cards-wrapper">
+    <slot />
+</ul>
+
+<style>
+    .cards-wrapper {
+        width: 100%;
+        padding: 40px;
+        display: flex;
+        gap: 32px;
+        list-style: none;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+</style>
+
+<script>
+    const wrapper = document.querySelector('.cards-wrapper') as HTMLDivElement;
+    let isClickPress = false;
+    const scroll = {
+        max: wrapper.scrollWidth - wrapper.clientWidth,
+        min: 0,
+        step: 2,
+    };
+    let pointerMovement = 0;
+
+    wrapper.addEventListener('pointerdown', (e) => {
+        isClickPress = true;
+        pointerMovement = e.clientX;
+    });
+    window.addEventListener('pointerup', () => {
+        isClickPress = false;
+    });
+
+    /** when pointer move then scroll the wrapper */
+    wrapper.addEventListener('pointermove', (e) => {
+        e.preventDefault();
+
+        if(isClickPress) {
+            const distance = pointerMovement - e.clientX;
+            // const direction = Math.sign(pointerMovement - e.clientX);
+            wrapper.scrollLeft += scroll.step * distance;
+        }
+    });
+</script>

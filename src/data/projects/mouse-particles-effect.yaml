@@ -1,5 +1,7 @@
+order: 7
 name: "Mouse particles"
-number: 7
+slug: mouse-particles-effect
+description: "As you move the mouse the particles will follow it. The particles shapes are changeable."
 script: "mouse-particles-effect.ts"
 created: 2025-05-26
 updated: 2025-05-28

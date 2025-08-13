@@ -1,0 +1,7 @@
+order: 10
+name: "Flag Wind Effect"
+slug: flag-wind-effect
+description: "Creating / simulating the effect of wind on a flag."
+script: "flag-wind-effect.ts"
+created: 2025-06-18
+updated: 2025-06-18

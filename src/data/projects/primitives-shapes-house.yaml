@@ -1,5 +1,7 @@
+order: 5
 name: "Primitive Shapes House"
-number: 5
+slug: primitives-shapes-house
+description: "Create a house using only primitive shapes."
 script: "primitive-shapes-house.ts"
 created: 2025-05-13
 updated: 2025-05-21

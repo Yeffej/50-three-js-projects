@@ -1,5 +1,8 @@
+order: 1
 name: "Glass Material Environment"
-number: 2
+slug: glass-material
+description: "The project uses the properties of the meshPhysicalMaterial to create a glass material 
+  and an environment texture to create the lights and reflections."
 script: "glass-material.ts"
 created: 2025-04-29
 updated: 2025-04-29

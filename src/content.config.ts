@@ -5,8 +5,10 @@ import { glob } from 'astro/loaders';
 const projects = defineCollection({ 
     loader: glob({ pattern: "**/*.yaml", base: "./src/data/projects" }),
     schema: z.object({
+        order: z.number(),
         name: z.string(),
-        number: z.number(),
+        slug: z.string(),
+        description: z.string(),
         script: z.string(),
         created: z.date(),
         updated: z.date(),

@@ -1,5 +1,8 @@
+order: 8
 name: "World Cube - SkyBox"
-number: 7
+slug: world-cube
+description: "A 3D world with a cube using a skybox textures. It's a simple example to replicate 
+  the skybox technique as it an enviroment map is used."
 script: "world-cube.ts"
 created: 2025-05-27
 updated: 2025-05-27

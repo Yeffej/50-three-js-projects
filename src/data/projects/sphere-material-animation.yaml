@@ -1,0 +1,7 @@
+order: 11
+name: "Sphere Material Animations"
+slug: sphere-material-animation
+description: "Animating the material of the sphere (using shaders), creating awesome effects."
+script: "sphere-material-animation.ts"
+created: 2025-06-20
+updated: 2025-06-26

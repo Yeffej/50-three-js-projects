@@ -1,5 +1,8 @@
+order: 3
 name: "Animated Text Effect"
-number: 3
+slug: animated-text-effect
+description: "This project uses a text geometry and loader that will draw and undraw 
+  the lines that compose the text."
 script: "animated-text-effect.ts"
 created: 2025-04-28
 updated: 2025-04-28

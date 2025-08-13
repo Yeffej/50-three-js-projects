@@ -1,0 +1,7 @@
+order: 12
+name: "Interactive Text Effect"
+slug: interactive-text-effect
+description: "Animating the material of the sphere (using shaders), creating awesome effects."
+script: "interactive-text-effect.ts"
+created: 2025-06-25
+updated: 2025-06-25

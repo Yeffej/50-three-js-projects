@@ -1,0 +1,7 @@
+order: 9
+name: "Mirror Renderer"
+slug: mirror-renderer
+description: "Creating a simple effect mirror using WebGLRenderTarget to render the scene as a texture."
+script: "mirror-renderer.ts"
+created: 2025-06-18
+updated: 2025-06-20

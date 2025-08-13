@@ -1,5 +1,8 @@
+order: 6
 name: "Haunted House"
-number: 6
+slug: haunted-house
+description: "Use the project {Primitive Shapes House} as a base and create a haunted house.
+  The haunted house have lights improvements, ghosts and a camara animation."
 script: "haunted-house.ts"
 created: 2025-05-21
 updated: 2025-05-21

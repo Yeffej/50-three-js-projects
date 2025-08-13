@@ -1,0 +1,7 @@
+order: 13
+name: "Palm Tree Shader Effect"
+slug: palm-tree-effect
+description: "Awesome animating Palm tree effect using shaders."
+script: "palm-tree-effect.ts"
+created: 2025-06-25
+updated: 2025-06-26

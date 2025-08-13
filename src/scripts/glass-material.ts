@@ -2,12 +2,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { BASE } from "../constants";
-
-const size = { w: window.innerWidth, h: window.innerHeight };
-const canvas = document.getElementById("webgl");
+import { sizes, canvas } from "./utils/utils";
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, size.w / size.h, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(45, sizes.aspectRatio, 0.1, 100);
 camera.position.z = 5;
 
 const rgbeLoader = new RGBELoader();
@@ -50,8 +48,8 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
 });
-renderer.setSize(size.w, size.h);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(sizes.w, sizes.h);
+renderer.setPixelRatio(sizes.pixelRatio);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -64,14 +62,13 @@ renderer.setAnimationLoop(loop);
 
 window.addEventListener("resize", () => {
   // update sizes
-  size.w = window.innerWidth;
-  size.h = window.innerHeight;
+  sizes.update;
 
   // update camera
-  camera.aspect = size.w / size.h;
+  camera.aspect = sizes.aspectRatio;
   camera.updateProjectionMatrix();
 
   // update renderer
-  renderer.setSize(size.w, size.h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(sizes.w, sizes.h);
+  renderer.setPixelRatio(sizes.pixelRatio);
 });
